@@ -277,6 +277,51 @@ body{ padding-bottom:88px; padding-top:64px; } /* room for the fixed mobile head
 .stat-float p:last-child{font-size:11px; letter-spacing:.02em; color:rgba(42,36,30,.55); margin-top:6px;}
 @media(min-width:768px){.stat-float{display:block;}}
 
+/* ---------- Hero rotating highlights carousel ---------- */
+.hero-carousel{position:relative; display:flex; align-items:center;}
+.hero-carousel-card{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  border-radius:1.6rem;
+  background:var(--ivory);
+  border:1px solid var(--line);
+  overflow:hidden;
+  box-shadow:0 30px 60px -35px rgba(42,36,30,.35);
+}
+@media(min-width:560px){.hero-carousel-card{flex-direction:row;}}
+.hero-carousel-photo{
+  position:relative;
+  aspect-ratio:4/3;
+  flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg,var(--plum),var(--plum-light),var(--plum));
+}
+@media(min-width:560px){.hero-carousel-photo{width:42%; aspect-ratio:auto;}}
+.hero-carousel-photo span{font-family:'Fraunces',serif; font-size:12.5px; color:rgba(251,246,240,.45); text-align:center; padding:0 16px;}
+.hero-carousel-photo.g1{background:linear-gradient(135deg,var(--plum),var(--plum-light),var(--plum));}
+.hero-carousel-photo.g2{background:linear-gradient(135deg,rgba(227,185,174,.6),var(--parchment)); }
+.hero-carousel-photo.g2 span{color:rgba(42,36,30,.35);}
+.hero-carousel-photo.g3{background:linear-gradient(135deg,rgba(198,161,91,.35),var(--parchment));}
+.hero-carousel-photo.g3 span{color:rgba(42,36,30,.35);}
+.hero-carousel-photo.g4{background:linear-gradient(135deg,rgba(139,154,114,.4),var(--parchment));}
+.hero-carousel-photo.g4 span{color:rgba(42,36,30,.35);}
+.hero-carousel-info{padding:22px 22px 24px; flex:1; min-width:0;}
+.hero-carousel-tag{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:rgba(42,36,30,.45); margin-bottom:8px;}
+.hero-carousel-title{font-family:'Fraunces',serif; font-size:17px; color:var(--ink); margin-bottom:6px; line-height:1.25;}
+.hero-carousel-desc{font-size:12.5px; line-height:1.5; color:rgba(42,36,30,.6); margin-bottom:10px;}
+.hero-carousel-link{display:inline-flex; align-items:center; gap:6px; font-size:12px; letter-spacing:.02em; color:var(--clay); transition:color .3s var(--ease);}
+.hero-carousel-link:hover{color:var(--ink);}
+.hero-carousel-link .arrow{display:inline-block; transition:transform .3s var(--ease);}
+.hero-carousel-link:hover .arrow{transform:translateX(3px);}
+.hero-carousel-stats{display:flex; gap:16px; margin-top:16px; padding-top:14px; border-top:1px solid var(--line);}
+.hero-carousel-stats .stat-value{font-family:'Fraunces',serif; font-size:15px; color:var(--ink);}
+.hero-carousel-stats .stat-label{font-size:10px; letter-spacing:.02em; color:rgba(42,36,30,.5); margin-top:2px;}
+.hero-carousel-dots{display:flex; align-items:center; justify-content:center; gap:7px; margin-top:18px;}
+.hero-carousel-dots .dot{width:6px; height:6px; border-radius:50%; background:var(--line); transition:all .3s var(--ease);}
+.hero-carousel-dots .dot.active{width:20px; border-radius:4px; background:var(--gold);}
+
 /* ---------- Hero purchase cards ---------- */
 .products-heading-wrap{margin-top:56px; text-align:center; max-width:480px; margin-left:auto; margin-right:auto;}
 @media(min-width:768px){.products-heading-wrap{margin-top:76px;}}
@@ -647,9 +692,9 @@ body{ padding-bottom:88px; padding-top:64px; } /* room for the fixed mobile head
 .study-auth-form input::placeholder{color:rgba(42,36,30,.35);}
 .study-auth-form input:focus{outline:none; box-shadow:0 0 0 3px rgba(198,161,91,.35);}
 .study-auth-form .btn-primary{width:100%; justify-content:center; margin-top:4px;}
-.study-auth-switch{margin-top:18px; font-size:13px; color:rgba(42,36,30,.55);}
-.study-auth-switch button{color:var(--clay); text-decoration:underline; text-underline-offset:2px; font-size:13px;}
-.study-auth-switch button:hover{color:var(--ink);}
+.study-auth-divider{display:flex; align-items:center; gap:12px; margin:22px 0; color:rgba(42,36,30,.4); font-size:12px; letter-spacing:.04em; text-transform:uppercase;}
+.study-auth-divider::before, .study-auth-divider::after{content:''; flex:1; height:1px; background:var(--line);}
+.study-auth-login-btn{width:100%; justify-content:center;}
 .study-auth-error{margin-top:14px; font-size:13px; color:#b8483a;}
 .study-auth-note{margin-top:24px; font-size:11.5px; line-height:1.5; color:rgba(42,36,30,.4);}
 .study-account-bar{
@@ -795,14 +840,25 @@ body{ padding-bottom:88px; padding-top:64px; } /* room for the fixed mobile head
     </div>
 
     <div class="portrait-wrap" id="portraitWrap">
-      <div class="portrait" id="portrait">
-        <div class="portrait-mono">FM</div>
-        <div class="portrait-glow"></div>
-        <div class="portrait-caption">
-          <div class="portrait-caption-inner"><p>Portrait placeholder — replace with photo</p></div>
+      <div class="hero-carousel" id="heroCarousel">
+        <div class="hero-carousel-card fade-panel" id="heroCarouselCard">
+          <div class="hero-carousel-photo g1" id="heroCarouselPhoto">
+            <span id="heroCarouselPhotoLabel">Add photo</span>
+          </div>
+          <div class="hero-carousel-info">
+            <p class="hero-carousel-tag" id="heroCarouselTag">Personal Growth</p>
+            <p class="hero-carousel-title" id="heroCarouselTitle">Personal Growth Sessions</p>
+            <p class="hero-carousel-desc" id="heroCarouselDesc">One-on-one guidance for self-awareness, direction and lasting change.</p>
+            <a href="#session-personal-growth" class="hero-carousel-link" id="heroCarouselLink" data-target="session-personal-growth">Read More <span class="arrow">→</span></a>
+            <div class="hero-carousel-stats" id="heroCarouselStats">
+              <div><p class="stat-value">150+</p><p class="stat-label">Sessions Held</p></div>
+              <div><p class="stat-value">4.9★</p><p class="stat-label">Avg Rating</p></div>
+              <div><p class="stat-value">92%</p><p class="stat-label">Return Rate</p></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="stat-float"><p>476K+</p><p>Instagram Community</p></div>
+      <div class="hero-carousel-dots" id="heroCarouselDots"></div>
     </div>
   </div>
 
@@ -1334,21 +1390,30 @@ body{ padding-bottom:88px; padding-top:64px; } /* room for the fixed mobile head
       <h2 class="study-auth-title">Create an Account to Continue</h2>
       <p class="study-auth-desc">Study resources are available to registered users. Create a free account to unlock this page.</p>
 
-      <form id="studyCreateForm" class="study-auth-form">
-        <input type="tel" id="studyMobile" required placeholder="Mobile number" autocomplete="tel" />
-        <input type="text" id="studyUsername" required placeholder="Username" autocomplete="username" />
-        <input type="password" id="studyPassword" required minlength="4" placeholder="Create a password" autocomplete="new-password" />
-        <button type="submit" class="btn-primary">Create Account &amp; Continue</button>
-      </form>
+      <div id="studyCreateWrap">
+        <form id="studyCreateForm" class="study-auth-form">
+          <input type="tel" id="studyMobile" required placeholder="Mobile number" autocomplete="tel" />
+          <input type="text" id="studyUsername" required placeholder="Username" autocomplete="username" />
+          <input type="password" id="studyPassword" required minlength="4" placeholder="Create a password" autocomplete="new-password" />
+          <button type="submit" class="btn-primary">Create Account &amp; Continue</button>
+        </form>
 
-      <p class="study-auth-switch" id="studySwitchToSignInWrap">Already created an account on this device? <button type="button" id="studySwitchToSignIn">Sign in</button></p>
+        <div class="study-auth-divider"><span>or</span></div>
 
-      <form id="studySignInForm" class="study-auth-form" hidden>
-        <input type="text" id="studySignInId" required placeholder="Mobile number or username" autocomplete="username" />
-        <input type="password" id="studySignInPassword" required placeholder="Password" autocomplete="current-password" />
-        <button type="submit" class="btn-primary">Sign In</button>
-      </form>
-      <p class="study-auth-switch" id="studySwitchToCreateWrap" hidden>Need an account? <button type="button" id="studySwitchToCreate">Create one</button></p>
+        <button type="button" id="studySwitchToSignIn" class="btn-outline study-auth-login-btn">Login</button>
+      </div>
+
+      <div id="studySignInWrap" hidden>
+        <form id="studySignInForm" class="study-auth-form">
+          <input type="text" id="studySignInId" required placeholder="Mobile number or username" autocomplete="username" />
+          <input type="password" id="studySignInPassword" required placeholder="Password" autocomplete="current-password" />
+          <button type="submit" class="btn-primary">Sign In</button>
+        </form>
+
+        <div class="study-auth-divider"><span>or</span></div>
+
+        <button type="button" id="studySwitchToCreate" class="btn-outline study-auth-login-btn">Back to Create Account</button>
+      </div>
 
       <p class="study-auth-error" id="studyAuthError" hidden></p>
       <p class="study-auth-note">Runs entirely in your browser — no data leaves this device. This is a simple demo lock, not secure account storage.</p>
@@ -2032,8 +2097,8 @@ const studyCreateForm = document.getElementById('studyCreateForm');
 const studySignInForm = document.getElementById('studySignInForm');
 const studySwitchToSignIn = document.getElementById('studySwitchToSignIn');
 const studySwitchToCreate = document.getElementById('studySwitchToCreate');
-const studySwitchToSignInWrap = document.getElementById('studySwitchToSignInWrap');
-const studySwitchToCreateWrap = document.getElementById('studySwitchToCreateWrap');
+const studyCreateWrap = document.getElementById('studyCreateWrap');
+const studySignInWrap = document.getElementById('studySignInWrap');
 const studyAuthError = document.getElementById('studyAuthError');
 const studyLogoutBtn = document.getElementById('studyLogoutBtn');
 const studyAccountName = document.getElementById('studyAccountName');
@@ -2128,18 +2193,14 @@ studySignInForm.addEventListener('submit', function(e){
 
 studySwitchToSignIn.addEventListener('click', function(){
   clearStudyError();
-  studyCreateForm.hidden = true;
-  studySwitchToSignInWrap.hidden = true;
-  studySignInForm.hidden = false;
-  studySwitchToCreateWrap.hidden = false;
+  studyCreateWrap.hidden = true;
+  studySignInWrap.hidden = false;
 });
 
 studySwitchToCreate.addEventListener('click', function(){
   clearStudyError();
-  studySignInForm.hidden = true;
-  studySwitchToCreateWrap.hidden = true;
-  studyCreateForm.hidden = false;
-  studySwitchToSignInWrap.hidden = false;
+  studySignInWrap.hidden = true;
+  studyCreateWrap.hidden = false;
 });
 
 studyLogoutBtn.addEventListener('click', function(){
@@ -2148,6 +2209,8 @@ studyLogoutBtn.addEventListener('click', function(){
   clearStudyError();
   studyCreateForm.reset();
   studySignInForm.reset();
+  studySignInWrap.hidden = true;
+  studyCreateWrap.hidden = false;
 });
 
 checkStudyAuth();
@@ -2378,6 +2441,108 @@ window.addEventListener('DOMContentLoaded', function(){
     document.getElementById('portraitWrap').classList.add('on');
   });
 });
+
+// ---------- Hero rotating highlights carousel ----------
+const heroSlides = [
+  {
+    tag: 'Personal Growth', title: 'Personal Growth Sessions',
+    desc: 'One-on-one guidance for self-awareness, direction and lasting change.',
+    target: 'session-personal-growth', photoClass: 'g1',
+    stats: [['150+', 'Sessions Held'], ['4.9★', 'Avg Rating'], ['92%', 'Return Rate']]
+  },
+  {
+    tag: 'Confidence', title: 'Confidence Building',
+    desc: 'Practical exercises to help teens speak up and own their voice.',
+    target: 'session-confidence', photoClass: 'g2',
+    stats: [['200+', 'Students'], ['88%', 'More Confident'], ['4.8★', 'Rating']]
+  },
+  {
+    tag: 'Teen Guidance', title: 'Teen Guidance',
+    desc: 'Honest conversations on identity, pressure and adolescence.',
+    target: 'session-teen-guidance', photoClass: 'g3',
+    stats: [['120+', 'Conversations'], ['95%', 'Felt Heard'], ['4.9★', 'Rating']]
+  },
+  {
+    tag: 'Educational', title: 'Educational Sessions',
+    desc: 'Structured mentoring that connects academics with real purpose.',
+    target: 'session-educational', photoClass: 'g4',
+    stats: [['80+', 'Students'], ['30%', 'Grade Improvement'], ['4.7★', 'Rating']]
+  },
+  {
+    tag: 'Life Lessons', title: 'Life Lessons',
+    desc: 'Faith-rooted reflections that turn everyday moments into wisdom.',
+    target: 'session-life-lessons', photoClass: 'g1',
+    stats: [['300+', 'Reflections Shared'], ['90%', 'Recommend'], ['4.9★', 'Rating']]
+  }
+];
+
+let heroSlideIndex = 0;
+const heroCarouselCard = document.getElementById('heroCarouselCard');
+const heroCarouselDots = document.getElementById('heroCarouselDots');
+
+function updateHeroDots(index){
+  Array.from(heroCarouselDots.children).forEach(function(dot, i){
+    dot.classList.toggle('active', i === index);
+  });
+}
+
+function renderHeroSlide(index, animate){
+  const slide = heroSlides[index];
+  function apply(){
+    document.getElementById('heroCarouselPhoto').className = 'hero-carousel-photo ' + slide.photoClass;
+    document.getElementById('heroCarouselTag').textContent = slide.tag;
+    document.getElementById('heroCarouselTitle').textContent = slide.title;
+    document.getElementById('heroCarouselDesc').textContent = slide.desc;
+    const link = document.getElementById('heroCarouselLink');
+    link.setAttribute('href', '#' + slide.target);
+    link.setAttribute('data-target', slide.target);
+    document.getElementById('heroCarouselStats').innerHTML = slide.stats.map(function(s){
+      return '<div><p class="stat-value">' + s[0] + '</p><p class="stat-label">' + s[1] + '</p></div>';
+    }).join('');
+    updateHeroDots(index);
+  }
+  if(animate){
+    heroCarouselCard.classList.add('fade-out');
+    setTimeout(function(){
+      apply();
+      heroCarouselCard.classList.remove('fade-out');
+    }, 250);
+  } else {
+    apply();
+  }
+}
+
+let heroAutoRotateTimer;
+function goToHeroSlide(index){
+  heroSlideIndex = (index + heroSlides.length) % heroSlides.length;
+  renderHeroSlide(heroSlideIndex, true);
+}
+function advanceHeroSlideAuto(){
+  goToHeroSlide(heroSlideIndex + 1);
+}
+function resetHeroAutoRotate(){
+  clearInterval(heroAutoRotateTimer);
+  heroAutoRotateTimer = setInterval(advanceHeroSlideAuto, 5000);
+}
+
+heroSlides.forEach(function(_, i){
+  const dot = document.createElement('button');
+  dot.type = 'button';
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.setAttribute('aria-label', 'Go to highlight ' + (i + 1));
+  dot.addEventListener('click', function(){
+    goToHeroSlide(i);
+    resetHeroAutoRotate();
+  });
+  heroCarouselDots.appendChild(dot);
+});
+
+renderHeroSlide(0, false);
+resetHeroAutoRotate();
+
+const heroCarouselEl = document.getElementById('heroCarousel');
+heroCarouselEl.addEventListener('mouseenter', function(){ clearInterval(heroAutoRotateTimer); });
+heroCarouselEl.addEventListener('mouseleave', resetHeroAutoRotate);
 
 // ---------- Hero portrait parallax ----------
 const portrait = document.getElementById('portrait');
